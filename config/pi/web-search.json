@@ -1,0 +1,38 @@
+{
+  "searchRouting": {
+    "providers": ["duckduckgo"],
+    "fallbackOn": ["network", "invalid-response"]
+  },
+  "webSearch": {
+    "enabled": true,
+    "allowedProviders": ["duckduckgo"]
+  },
+  "fetchRouting": {
+    "providers": ["http"],
+    "allowRemoteHostedProviders": false
+  },
+  "fetchContent": {
+    "redirects": "same-origin"
+  },
+  "workflow": "none",
+  "allowBrowserCookies": false,
+  "githubClone": {
+    "enabled": false
+  },
+  "youtube": {
+    "enabled": false
+  },
+  "video": {
+    "enabled": false
+  },
+  "pdf": {
+    "enabled": true,
+    "provider": "unpdf"
+  },
+  "tools": {
+    "webSearch": { "enabled": true },
+    "fetchContent": { "enabled": true },
+    "getSearchContent": { "enabled": true },
+    "sourceCheck": { "enabled": true }
+  }
+}

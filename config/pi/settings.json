@@ -1,0 +1,27 @@
+{
+  "compaction": {
+    "enabled": true,
+    "modelOverrides": {
+      "lmstudio/dirty-shirley-9b-q4": {
+        "reserveTokens": 2048,
+        "keepRecentTokens": 2048
+      },
+      "strata/qwen3.6-35b-a3b-ud-q4_k_xl": {
+        "reserveTokens": 20000,
+        "keepRecentTokens": 12000
+      }
+    }
+  },
+  "retry": {
+    "enabled": false
+  },
+  "packages": [
+    "npm:pi-web-access@0.39.0",
+    "npm:@injaneity/pi-computer-use@0.5.1",
+    "npm:pi-permission-system@0.8.0",
+    "npm:pi-token-speed@0.11.0"
+  ],
+  "lastChangelogVersion": "1.2.0",
+  "defaultProvider": "strata",
+  "defaultModel": "qwen3.6-35b-a3b-ud-q4_k_xl"
+}

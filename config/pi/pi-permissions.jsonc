@@ -1,0 +1,27 @@
+{
+  "defaultPolicy": {
+    "tools": "ask",
+    "bash": "ask",
+    "mcp": "ask",
+    "skills": "ask",
+    "special": "ask"
+  },
+  "tools": {
+    "read": "allow",
+    "grep": "allow",
+    "find": "allow",
+    "ls": "allow",
+    "web_search": "allow",
+    "source_check": "allow",
+    "fetch_content": "allow",
+    "get_search_content": "allow",
+    "find_roots": "allow",
+    "observe_ui": "allow",
+    "search_ui": "allow",
+    "expand_ui": "allow",
+    "inspect_ui": "allow",
+    "read_text": "allow",
+    "wait_for": "allow",
+    "act_ui": "ask"
+  }
+}

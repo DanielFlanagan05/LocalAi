@@ -1,0 +1,20 @@
+{
+	"id": "localai-resource-monitor",
+	"name": "LocalAI compute guard",
+	"version": "0.1.0",
+	"description": "Monitors RAM and RX 7900 XT headroom; permits two active runs only when measured capacity allows, otherwise preserves the oldest Pi transcript and interrupts that run.",
+	"apiVersion": 2,
+	"permissions": [
+		"ui"
+	],
+	"ui": {
+		"composer.actions": [
+			{
+				"id": "status",
+				"label": "Compute status",
+				"kind": "action",
+				"action": "localai-resource-monitor:status"
+			}
+		]
+	}
+}

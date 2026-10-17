@@ -1,0 +1,102 @@
+# Local data and generated artifacts
+/models/
+/logs/
+/archive/
+/cache/
+/temp/
+/data/
+/workspaces/
+/appdata/
+/tests/
+/toolchains/
+/tools/
+
+# Installed apps are local runtimes. Keep only the custom ComfyUI controls and workflows below.
+/apps/*
+!/apps/ComfyUI/
+/apps/ComfyUI/*
+!/apps/ComfyUI/manage_comfy.py
+!/apps/ComfyUI/share_gpu.py
+!/apps/ComfyUI/start_gpu.py
+!/apps/ComfyUI/check_gpu.py
+!/apps/ComfyUI/configure_easy_workflows.py
+!/apps/ComfyUI/prepare_workflows.py
+!/apps/ComfyUI/verify_workflows.py
+!/apps/ComfyUI/GPU_WORKFLOWS.md
+!/apps/ComfyUI/Open ComfyUI.bat
+!/apps/ComfyUI/Stop ComfyUI.bat
+!/apps/ComfyUI/run_amd_gpu.bat
+!/apps/ComfyUI/run_amd_gpu_enable_dynamic_vram.bat
+!/apps/ComfyUI/ready_workflows/
+/apps/ComfyUI/ready_workflows/*
+!/apps/ComfyUI/ready_workflows/*.json
+
+# Python/Node runtimes, dependency trees, and build output
+**/__pycache__/
+**/.venv/
+**/venv/
+**/node_modules/
+**/python_embeded/
+**/build/
+**/dist/
+**/obj/
+**/outputs/
+**/input/
+**/models/
+
+# Configuration is opt-in: keep only reviewed Pi settings and custom extensions.
+/config/*
+!/config/pi/
+/config/pi/*
+!/config/pi/settings.json
+!/config/pi/web-search.json
+!/config/pi/pi-permissions.jsonc
+!/config/pi/extensions/
+!/config/pi/extensions/**
+!/config/pi-web-ui/
+/config/pi-web-ui/*
+!/config/pi-web-ui/plugins/
+!/config/pi-web-ui/plugins/localai-resource-monitor/
+!/config/pi-web-ui/plugins/localai-resource-monitor/**
+
+# Pi and Pi Web UI private or volatile state
+/config/pi/auth.json
+/config/pi/provider-keys.json
+/config/pi/models.json
+/config/pi/models-store.json
+/config/pi/sessions/
+/config/pi/bin/
+/config/pi/npm/
+/config/pi/web-search-cache/
+**/.pi-approved
+**/attachments/
+**/client-state.json
+**/composer-drafts.json
+**/auth-token*
+**/secrets*
+**/*.dpapi
+
+# Machine-specific runtime state and nested application checkouts
+/config/strata/
+/config/comfyui/
+/apps/ComfyUI/ComfyUI/
+/apps/Strata/
+
+# Logs and model weights wherever they occur
+*.log
+*.gguf
+*.ggml
+*.safetensors
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.engine
+*.bin
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
