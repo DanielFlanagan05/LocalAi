@@ -46,6 +46,10 @@
 
 # Configuration is opt-in: keep only reviewed Pi settings and custom extensions.
 /config/*
+!/config/linux/
+/config/linux/*
+!/config/linux/catalog.json
+!/config/linux/profiles.json
 !/config/pi/
 /config/pi/*
 !/config/pi/settings.json
@@ -87,12 +91,37 @@
 *.gguf
 *.ggml
 *.safetensors
+*.st
 *.ckpt
 *.pth
 *.pt
 *.onnx
 *.engine
 *.bin
+
+# Private state from every Linux harness, regardless of nesting.
+**/sessions/
+**/transcripts/
+**/conversations/
+**/checkpoints/
+**/prompt-cache/
+**/context-cache/
+**/runtime-state/
+**/.localai/
+**/.hermes/
+**/.claude/
+**/.opencode/
+**/.pi/
+*.jsonl
+*.sqlite
+*.sqlite3
+*.db
+*.partial
+*.part
+.env
+.env.*
+
+# Keep the Python test suite in Git; legacy /tests/ is private runtime data.
 
 # OS/editor noise
 .DS_Store

@@ -1,0 +1,266 @@
+{
+  "coding-concurrent": {
+    "engine": "gufo",
+    "model": "qwen27-q4",
+    "draft": "qwen27-draft",
+    "context": 262144,
+    "sessions": 2,
+    "cache_gib": 26,
+    "minimum_free_gib": 8,
+    "estimated_gib": 84,
+    "vision": true,
+    "disk_cache_gib": 40,
+    "disk_staging_gib": 16,
+    "display_name": "Coding \u00b7 Qwen3.8-27B Q4 \u00b7 Gufo \u00b7 2 sessions \u00b7 262K"
+  },
+  "coding-quality": {
+    "engine": "kyojin-qwen",
+    "model": "qwen-exl3",
+    "context": 262144,
+    "sessions": 1,
+    "minimum_free_gib": 8,
+    "estimated_gib": 105,
+    "vision": true,
+    "environment": {
+      "EXL3_PREFILL_CHUNK": "1024",
+      "EXL3_PREFILL_BIG_CHUNK": "1024",
+      "EXL3_PREFILL_BIG_TAIL": "0"
+    },
+    "display_name": "Coding \u00b7 Qwen3.8-Flash-Next EXL3 4-bit \u00b7 Kyojin \u00b7 262K"
+  },
+  "claude-compatible": {
+    "engine": "llama",
+    "model": "qwen27-q4",
+    "context": 262144,
+    "sessions": 1,
+    "cache_gib": 16,
+    "minimum_free_gib": 8,
+    "estimated_gib": 55,
+    "vision": true,
+    "normalize_system_messages": true,
+    "purpose": "Legacy Claude-style model ID: Claude Code may impose a 200K client limit; use messages-compatible.",
+    "display_name": "Legacy \u00b7 Qwen3.8-27B Q4 \u00b7 llama.cpp \u00b7 262K"
+  },
+  "vision-small": {
+    "engine": "llama",
+    "model": "vision-small",
+    "context": 262144,
+    "sessions": 2,
+    "cache_gib": 8,
+    "minimum_free_gib": 8,
+    "estimated_gib": 50,
+    "vision": true,
+    "display_name": "Vision \u00b7 Qwen3-VL-8B Q4_K_M \u00b7 llama.cpp \u00b7 2 sessions \u00b7 262K"
+  },
+  "vision-small-four": {
+    "engine": "llama",
+    "model": "vision-small",
+    "context": 262144,
+    "sessions": 4,
+    "cache_gib": 8,
+    "minimum_free_gib": 8,
+    "estimated_gib": 85,
+    "vision": true,
+    "display_name": "Vision \u00b7 Qwen3-VL-8B Q4_K_M \u00b7 llama.cpp \u00b7 4 sessions \u00b7 262K"
+  },
+  "vision-clearcase": {
+    "engine": "llama",
+    "model": "vision-small",
+    "context": 16384,
+    "sessions": 4,
+    "cache_gib": 4,
+    "minimum_free_gib": 8,
+    "estimated_gib": 18,
+    "vision": true,
+    "purpose": "ClearCase page-isolated parity; not a general chat profile",
+    "display_name": "ClearCase \u00b7 Qwen3-VL-8B Q4_K_M \u00b7 llama.cpp \u00b7 16K"
+  },
+  "vision-quality": {
+    "engine": "kyojin-qwen",
+    "model": "qwen-exl3",
+    "context": 262144,
+    "sessions": 1,
+    "minimum_free_gib": 8,
+    "estimated_gib": 105,
+    "vision": true,
+    "environment": {
+      "EXL3_PREFILL_CHUNK": "1024",
+      "EXL3_PREFILL_BIG_CHUNK": "1024",
+      "EXL3_PREFILL_BIG_TAIL": "0"
+    },
+    "display_name": "Vision \u00b7 Qwen3.8-Flash-Next EXL3 4-bit \u00b7 Kyojin \u00b7 262K"
+  },
+  "vision-max": {
+    "engine": "kyojin-glm",
+    "model": "glm",
+    "context": 262144,
+    "sessions": 1,
+    "minimum_free_gib": 8,
+    "estimated_gib": 108,
+    "vision": true,
+    "environment": {
+      "EXL3_PREFILL_CHUNK": "2048",
+      "EXL3_PREFILL_BIG_CHUNK": "2048",
+      "EXL3_PREFILL_BIG_TAIL": "0",
+      "GLM_NGRAM": "off"
+    },
+    "image_cache_mb": 256,
+    "display_name": "Vision \u00b7 GLM-5.3-Flash EXL3 \u00b7 Kyojin \u00b7 262K"
+  },
+  "glm-experimental": {
+    "engine": "kyojin-glm",
+    "model": "glm",
+    "context": 262144,
+    "sessions": 1,
+    "minimum_free_gib": 8,
+    "estimated_gib": 108,
+    "vision": true,
+    "environment": {
+      "EXL3_PREFILL_CHUNK": "2048",
+      "EXL3_PREFILL_BIG_CHUNK": "2048",
+      "EXL3_PREFILL_BIG_TAIL": "0",
+      "GLM_NGRAM": "off"
+    },
+    "image_cache_mb": 256,
+    "display_name": "Experimental \u00b7 GLM-5.3-Flash EXL3 \u00b7 Kyojin \u00b7 262K"
+  },
+  "comfyui": {
+    "engine": "comfyui",
+    "context": 0,
+    "sessions": 1,
+    "minimum_free_gib": 8,
+    "estimated_gib": 60,
+    "port": 8188
+  },
+  "coding-reference": {
+    "engine": "llama",
+    "model": "qwen27-q4",
+    "context": 262144,
+    "sessions": 2,
+    "cache_gib": 8,
+    "minimum_free_gib": 8,
+    "estimated_gib": 65,
+    "vision": true,
+    "display_name": "Reference \u00b7 Qwen3.8-27B Q4 \u00b7 llama.cpp \u00b7 2 sessions \u00b7 262K"
+  },
+  "coding-quality-exl3": {
+    "engine": "kyojin-qwen",
+    "model": "qwen-exl3",
+    "context": 262144,
+    "sessions": 1,
+    "minimum_free_gib": 8,
+    "estimated_gib": 105,
+    "vision": true,
+    "environment": {
+      "EXL3_PREFILL_CHUNK": "1024",
+      "EXL3_PREFILL_BIG_CHUNK": "1024",
+      "EXL3_PREFILL_BIG_TAIL": "0"
+    },
+    "display_name": "Legacy \u00b7 Qwen3.8-Flash-Next EXL3 4-bit \u00b7 Kyojin \u00b7 262K"
+  },
+  "qwen-exl3-512k-plain": {
+    "engine": "kyojin-qwen",
+    "model": "qwen-exl3",
+    "context": 524288,
+    "sessions": 1,
+    "minimum_free_gib": 8,
+    "estimated_gib": 103,
+    "vision": false,
+    "environment": {
+      "EXL3_PREFILL_CHUNK": "1024",
+      "EXL3_PREFILL_BIG_CHUNK": "1024",
+      "EXL3_PREFILL_BIG_TAIL": "0"
+    },
+    "speculative": false,
+    "display_name": "Extended \u00b7 Qwen3.8-Flash-Next EXL3 4-bit \u00b7 Kyojin \u00b7 524K"
+  },
+  "messages-compatible": {
+    "engine": "llama",
+    "model": "qwen27-q4",
+    "context": 262144,
+    "sessions": 1,
+    "cache_gib": 16,
+    "minimum_free_gib": 8,
+    "estimated_gib": 55,
+    "vision": true,
+    "normalize_system_messages": true,
+    "display_name": "Messages \u00b7 Qwen3.8-27B Q4 \u00b7 llama.cpp \u00b7 262K"
+  },
+  "gufo-flash": {
+    "engine": "gufo",
+    "model": "qwen-flash",
+    "context": 262144,
+    "sessions": 1,
+    "cache_gib": 12,
+    "disk_cache_gib": 16,
+    "minimum_free_gib": 8,
+    "estimated_gib": 103,
+    "vision": false,
+    "runtime_image": "ghcr.io/gufo-org/toolboxes/gufo-runtime@sha256:7d634b171e67dbe4377655b514aa4828dd36e137d187804e11a049bacd8bfd07",
+    "purpose": "Qualified Flash-Next Q4/MTP, native 262K; 12 GiB RAM / 16 GiB disk cache. Fresh 8K median 1450 tok/s, fresh 200K 1290 tok/s; live 200K continuation 0.39s. Disk-restart recovery not qualified.",
+    "display_name": "Coding \u00b7 Qwen3.8-Flash-Next UD-Q4_K_XL \u00b7 Gufo MTP \u00b7 262K"
+  },
+  "gufo-flash-ar": {
+    "engine": "gufo",
+    "model": "qwen-flash",
+    "context": 262144,
+    "sessions": 1,
+    "cache_gib": 1,
+    "disk_cache_gib": 2,
+    "minimum_free_gib": 8,
+    "estimated_gib": 98,
+    "vision": false,
+    "runtime_image": "ghcr.io/gufo-org/toolboxes/gufo-runtime@sha256:7d634b171e67dbe4377655b514aa4828dd36e137d187804e11a049bacd8bfd07",
+    "purpose": "AR prefill control using the same GGUF and official runtime; not a new model quantization.",
+    "speculative": false,
+    "display_name": "Control \u00b7 Qwen3.8-Flash-Next UD-Q4_K_XL \u00b7 Gufo AR \u00b7 262K"
+  },
+  "comfyui-cached": {
+    "engine": "comfyui",
+    "context": 0,
+    "sessions": 1,
+    "minimum_free_gib": 8,
+    "estimated_gib": 60,
+    "port": 8188,
+    "node_cache_headroom_gib": 16,
+    "purpose": "Opt-in single-family repeats; restart ComfyUI before changing model families to release cached model weights."
+  },
+  "gufo-hauhau": {
+    "engine": "gufo",
+    "model": "qwen35-hauhau-q4",
+    "context": 262144,
+    "sessions": 1,
+    "cache_gib": 26,
+    "disk_cache_gib": 40,
+    "minimum_free_gib": 8,
+    "estimated_gib": 84,
+    "vision": false,
+    "speculative": false,
+    "runtime_image": "ghcr.io/gufo-org/toolboxes/gufo-runtime@sha256:7d634b171e67dbe4377655b514aa4828dd36e137d187804e11a049bacd8bfd07",
+    "purpose": "HauhauCS Qwen3.5-27B Aggressive Q4_K_M, text-only Gufo via metadata-only supported-chat-template copy; all tensors preserved. Native 262K configured; long-context acceptance not measured. Target-only, no borrowed draft. Publisher F16 projector retained for other engines; rejected by stock Gufo.",
+    "sampling": {
+      "temperature": 0.6,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0
+    },
+    "disk_staging_gib": 16,
+    "display_name": "Uncensored \u00b7 Qwen3.5-27B HauhauCS Aggressive Q4_K_M \u00b7 Gufo \u00b7 262K"
+  },
+  "coding-concurrent-gufo020": {
+    "engine": "gufo",
+    "model": "qwen27-q4",
+    "draft": "qwen27-draft",
+    "context": 262144,
+    "sessions": 2,
+    "cache_gib": 16,
+    "minimum_free_gib": 8,
+    "estimated_gib": 74,
+    "vision": true,
+    "disk_cache_gib": 40,
+    "disk_staging_gib": 16,
+    "display_name": "Test \u00b7 Qwen3.8-27B Q4 \u00b7 Gufo 0.20 \u00b7 2 sessions \u00b7 262K",
+    "runtime_image": "ghcr.io/gufo-org/toolboxes/gufo-runtime@sha256:7d634b171e67dbe4377655b514aa4828dd36e137d187804e11a049bacd8bfd07",
+    "purpose": "Candidate after older runtime/26 GiB cache swapped 5.7 GiB during two 200K continuations. Gufo 0.20 with 16 GiB retained RAM cache; not yet accepted. Existing production profile preserved."
+  }
+}

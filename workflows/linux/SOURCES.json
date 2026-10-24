@@ -1,0 +1,63 @@
+{
+  "repository": "Comfy-Org/workflow_templates",
+  "revision": "46e060ea88eb07adecf07197ec384c54a70e030c",
+  "license": "MIT",
+  "sources": [
+    {
+      "name": "image_chroma_text_to_image",
+      "source": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/46e060ea88eb07adecf07197ec384c54a70e030c/templates/image_chroma_text_to_image.json",
+      "source_sha256": "fd89c0b70424d2b3273259244736554fe47f85de11c013e48bbef887798dc807"
+    },
+    {
+      "name": "image_qwen_image_2_1_t2i",
+      "source": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/46e060ea88eb07adecf07197ec384c54a70e030c/templates/image_qwen_image_2_1_t2i.json",
+      "source_sha256": "5f2b50eeaf27e56a45456681ad5319df1ae51243d9653ac3f92c7dc05d1e1503"
+    },
+    {
+      "name": "image_qwen_image_2_1_image_edit",
+      "source": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/46e060ea88eb07adecf07197ec384c54a70e030c/templates/image_qwen_image_2_1_image_edit.json",
+      "source_sha256": "c1e6551759de131f083a040da072ac6f032c3c8401ceca202412cd912897d0fc"
+    },
+    {
+      "name": "image_z_image_turbo",
+      "source": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/46e060ea88eb07adecf07197ec384c54a70e030c/templates/image_z_image_turbo.json",
+      "source_sha256": "baaf937ff071970cc6b1e2fa0093a4dd664a4cc734d38adc4c7810e535c1f1d3"
+    },
+    {
+      "name": "image_flux2_fp8",
+      "source": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/46e060ea88eb07adecf07197ec384c54a70e030c/templates/image_flux2_fp8.json",
+      "source_sha256": "b23516af571bd0aaacb6a9ee9eb94b585a70a6d8a518b59918e1ace5edc1cc37"
+    },
+    {
+      "name": "video_minimax_h3_t2v",
+      "source": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/46e060ea88eb07adecf07197ec384c54a70e030c/templates/video_minimax_h3_t2v.json",
+      "source_sha256": "8a5eb23b0dd2df9e99b6f7af9684e770f188feca820d241364b729e01dedf3b6"
+    },
+    {
+      "name": "video_minimax_h3_i2v",
+      "source": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/46e060ea88eb07adecf07197ec384c54a70e030c/templates/video_minimax_h3_i2v.json",
+      "source_sha256": "34ee39544808fd3b0dc8de9df082940d4d41c3771beb80d3988c1ea5531cec0d"
+    },
+    {
+      "name": "video_ltx2_3_t2v",
+      "source": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/46e060ea88eb07adecf07197ec384c54a70e030c/templates/video_ltx2_3_t2v.json",
+      "source_sha256": "7a6c13e24754c2525d176f439a4e1ce230b15d13928f6c303a62c643281a2da9"
+    },
+    {
+      "name": "video_wan2_2_14B_i2v",
+      "source": "https://raw.githubusercontent.com/Comfy-Org/workflow_templates/46e060ea88eb07adecf07197ec384c54a70e030c/templates/video_wan2_2_14B_i2v.json",
+      "source_sha256": "0bc0bee732181a0f5a5a0807b9e2cef883a1409bca4cdb70eca6b2e2e87e5c19"
+    }
+  ],
+  "model_format_replacements": {
+    "Chroma1-HD-fp8mixed.safetensors": "Chroma1-HD.safetensors",
+    "qwen_image_2.1_int8_convrot.safetensors": "qwen_image_2.1_bf16.safetensors",
+    "qwen3vl_8b_int8_convrot.safetensors": "qwen3vl_8b_bf16.safetensors",
+    "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+    "minimax_h3_video_vae_int8_convrot.safetensors": "minimax_h3_video_vae_fp16.safetensors",
+    "ltx-2.3-22b-dev-fp8.safetensors": "ltx-2.3-22b-dev.safetensors",
+    "gemma_3_12B_it_fp4_mixed.safetensors": "gemma_3_12B_it_fp8_scaled.safetensors",
+    "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors": "wan2.2_i2v_low_noise_14B_fp16.safetensors",
+    "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors": "wan2.2_i2v_high_noise_14B_fp16.safetensors"
+  }
+}

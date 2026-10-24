@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hauhau Qwen 27B on Gufo</title><style>body{font:16px/1.6 system-ui,sans-serif;max-width:850px;margin:35px auto;padding:0 22px;color:#18343c}h1{line-height:1.2}h2{font-size:21px}a{color:#137568}code{font-size:13px;overflow-wrap:anywhere}pre{background:#edf5f3;padding:16px;white-space:pre-wrap}.note{border-left:4px solid #b88328;background:#fff6e6;padding:14px}td,th{text-align:left;padding:7px;border-bottom:1px solid #ddd}table{border-collapse:collapse;width:100%}</style></head><body>
+<p>Flow Z13 · October 21, 2026</p><h1>Hauhau Qwen3.5 27B: Gufo setup</h1>
+<p><a href="https://huggingface.co/HauhauCS/Qwen3.5-27B-Uncensored-HauhauCS-Aggressive">Publisher repository</a> · <b>Q4_K_M</b> · Gufo 0.20 · <b>262,144 total tokens configured</b> · one session · text-only. Input, tools, reasoning and output share the context budget; 32,768 output tokens are reserved by the server configuration.</p>
+<h2>Daily use</h2><pre>pi-hauhau
+# Or:
+hermes-hauhau
+# Stop the active engine:
+localai stop</pre>
+<p>Run either harness from your project directory. It starts Gufo automatically. ComfyUI can run alongside Gufo, with a shared-memory warning. To switch inference models, finish active work and run <code>localai stop</code> first. Existing plain Pi/Hermes and Gufo Flash launchers are unchanged.</p>
+<h2>Compatibility workaround</h2>
+<p class="note">The untouched publisher GGUF does not load directly in this pinned Gufo runtime: its chat-template hash is unrecognized. The publisher’s F16 vision projector is also rejected by Gufo’s BF16 vision loader. This profile therefore uses <b>a separate GGUF with only its chat-template metadata replaced</b> by the already-installed, Gufo-supported Unsloth Qwen template. The publisher model and projector remain intact. Every model tensor is compared by SHA-256 before the copy is registered. Vision is disabled for this Gufo profile; the F16 projector remains available to compatible engines. This is a documented compatibility adaptation, not native publisher-template support.</p>
+<h2>Steps taken, and how to recreate them</h2>
+<ol><li>Registered the repository in <a href="../config/linux/catalog.json">catalog.json</a> as <code>qwen35-hauhau-q4</code>, pinned to revision <code>ba23816347e0f24d82efbd2397278ff32743b75c</code>. Selected only the Q4_K_M weights and matching F16 projector; verified their publisher SHA-256 hashes.</li>
+<li>Created the separate compatibility GGUF with <a href="../scripts/linux/prepare_hauhau.py">prepare_hauhau.py</a>. It extracts the supported template from the existing <code>qwen27-q4</code> model, checks its pinned hash, uses the installed GGUF metadata tool and verifies that all non-template metadata and model tensors are unchanged.</li>
+<li>Added <code>gufo-hauhau</code> to <a href="../config/linux/profiles.json">profiles.json</a>: pinned official Gufo runtime, one session, 262144 context, 26 GiB RAM-cache budget, 40 GiB disk-cache budget and 16 GiB disk staging with an 8 GiB minimum free-memory reserve. Target-only generation; no draft from another model. Thinking enabled; temperature 0.6, top-p 0.95, top-k 20, min-p 0. Long-context acceptance has not been measured.</li>
+<li>Merged the new Pi model registration, created its separate Hermes configuration, and installed two global launchers with <a href="../scripts/linux/register_profile.py">register_profile.py</a>. It preserves existing defaults and backs up edited registry/launcher files under <code>~/.local/state/localai/profile-registration/</code>.</li></ol>
+<p>With this repository’s current configuration, existing shared tooling, pinned Gufo image and <code>qwen27-q4</code> reference model installed, recreate the setup with:</p>
+<pre>cd /home/danfl/dev/LocalAi
+localai download qwen35-hauhau-q4
+~/.local/share/localai/apps/support/bin/python scripts/linux/prepare_hauhau.py
+~/.local/share/localai/apps/support/bin/python scripts/linux/register_profile.py gufo-hauhau --suffix hauhau
+pi-hauhau</pre>
+<p>To run the engine alone: <code>localai start gufo-hauhau</code>. Its OpenAI-compatible API is <code>http://127.0.0.1:8080/v1</code>, model ID <code>gufo-hauhau</code>. Use <code>localai serve gufo-hauhau</code> for a foreground server with Ctrl-C.</p>
+<h2>Files and storage</h2>
+<p>Shared directory: <code>~/.local/share/localai/models/HauhauCS/Qwen3.5-27B-Uncensored-HauhauCS-Aggressive/</code>. Original weights 16.54 GB, projector 0.93 GB, compatibility copy approximately 16.54 GB: <b>about 34.0 GB added</b>, plus future caches. No existing model was removed. Other repositories can use these files directly. Weights, generated compatibility files and conversation state remain outside Git.</p>
+<p>The compatibility manifest is <code>~/.local/state/localai/derived-models.json</code>; original verification is in <code>verified-models.json</code> in the same directory. Re-running the preparation script verifies and reuses an existing matching copy.</p>
+<h2>Verification</h2><p id="verification">Original SHA-256 checks passed. All 851 tensor hashes and non-template metadata matched the compatibility copy. Gufo loaded at 262144 context; a short text check and function-call/result round trip passed. Both global launchers then completed a real one-turn chat from /tmp using the final 26 GiB cache profile. Existing default launchers/settings stayed unchanged. Nineteen controller tests, Python compilation and whitespace checks passed. No long-context occupancy, uncensored-behavior or comparative quality result is claimed. The test LLM was stopped and the previously idle cached ComfyUI server restored.</p>
+<p><a href="getting-started.html">All ready-to-use models</a> · <a href="gufo-flash-results.html">Gufo Flash measurements and inventory</a></p>
+</body></html>

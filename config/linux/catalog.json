@@ -1,0 +1,180 @@
+{
+  "version": 1,
+  "storage_limit_gib": 791,
+  "models": {
+    "vision-small": {
+      "repository": "Qwen/Qwen3-VL-8B-Instruct-GGUF",
+      "revision": "00e7d63528e65d7b64e80e1293a8360b4af6a594",
+      "include": [
+        "Qwen3VL-8B-Instruct-Q4_K_M.gguf",
+        "mmproj-Qwen3VL-8B-Instruct-Q8_0.gguf"
+      ],
+      "sha256": {
+        "Qwen3VL-8B-Instruct-Q4_K_M.gguf": "67d1659bfe71b89d50b45a4ad1a9e5b997e5bb16ce5da66a6a6167abd569e9e2",
+        "mmproj-Qwen3VL-8B-Instruct-Q8_0.gguf": "c6ba85508d82f42590e6eb77d5340369ab6fecf107a7561d809523d8aa5f3bfd"
+      },
+      "model": "Qwen3VL-8B-Instruct-Q4_K_M.gguf",
+      "projector": "mmproj-Qwen3VL-8B-Instruct-Q8_0.gguf"
+    },
+    "qwen27-q4": {
+      "repository": "unsloth/Qwen3.8-27B-GGUF",
+      "revision": "4ca720788d1e01f1bff70c033e0d0028fd02e502",
+      "include": [
+        "Qwen3.8-27B-UD-Q4_K_XL.gguf",
+        "mmproj-BF16.gguf"
+      ],
+      "model": "Qwen3.8-27B-UD-Q4_K_XL.gguf",
+      "projector": "mmproj-BF16.gguf"
+    },
+    "qwen27-draft": {
+      "repository": "z-lab/Qwen3.8-27B-DFlash2-GGUF",
+      "revision": "2d9571f8ce46e151f61c6499c99dee6079e1d610",
+      "include": [
+        "Qwen3.8-27B-DFlash2-Q4_K_M.gguf"
+      ],
+      "model": "Qwen3.8-27B-DFlash2-Q4_K_M.gguf"
+    },
+    "glm": {
+      "repository": "yamz-labs/GLM-5.3-Flash-EXL3-Yamz",
+      "revision": "107718440923ac84f96de97ee4cecae35efa68a0",
+      "include": [
+        "*.safetensors",
+        "*.st",
+        "*.json",
+        "*.jinja",
+        "*.txt",
+        "SHA256SUMS"
+      ],
+      "model": "."
+    },
+    "qwen-exl3": {
+      "repository": "yamz-labs/Qwen3.8-Flash-Next-EXL3-Yamz",
+      "revision": "247ef39b06ff0b0fcba76026429e191b44e0e1f8",
+      "include": [
+        "*.safetensors",
+        "*.st",
+        "*.json",
+        "*.jinja",
+        "*.txt",
+        "SHA256SUMS"
+      ],
+      "model": "."
+    },
+    "image-qwen": {
+      "repository": "Comfy-Org/Qwen-Image-2.1",
+      "revision": "a8342359c61979b06a8dafb1a47991fe1f30e994",
+      "include": [
+        "diffusion_models/qwen_image_2.1_bf16.safetensors",
+        "text_encoders/qwen3vl_8b_bf16.safetensors",
+        "vae/qwen_image_2.1_vae_bf16.safetensors"
+      ],
+      "model": "diffusion_models/qwen_image_2.1_bf16.safetensors"
+    },
+    "image-chroma": {
+      "repository": "lodestones/Chroma1-HD",
+      "revision": "0e0c60ece1e82b17cb7f77342d765ba5024c40c0",
+      "include": [
+        "Chroma1-HD.safetensors"
+      ],
+      "model": "Chroma1-HD.safetensors",
+      "comfy_links": {
+        "Chroma1-HD.safetensors": "diffusion_models/Chroma1-HD.safetensors"
+      }
+    },
+    "chroma-encoder": {
+      "repository": "comfyanonymous/flux_text_encoders",
+      "revision": "6af2a98e3f615bdfa612fbd85da93d1ed5f69ef5",
+      "include": [
+        "t5xxl_fp8_e4m3fn_scaled.safetensors"
+      ],
+      "model": "t5xxl_fp8_e4m3fn_scaled.safetensors",
+      "comfy_links": {
+        "t5xxl_fp8_e4m3fn_scaled.safetensors": "text_encoders/t5xxl_fp8_e4m3fn_scaled.safetensors"
+      }
+    },
+    "video-h3": {
+      "repository": "Comfy-Org/MiniMax-H3",
+      "revision": "e5eb578a89295337b8ff433a035929ce0279e0b6",
+      "include": [
+        "diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+        "vae/minimax_h3_video_vae_fp16.safetensors",
+        "vae/minimax_h3_audio_vae_fp32.safetensors",
+        "loras/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors"
+      ],
+      "model": "diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors"
+    },
+    "video-wan-aio": {
+      "repository": "Phr00t/WAN2.2-14B-Rapid-AllInOne",
+      "revision": "30e803babc766d791f140b197aa7bf7f18f6e36d",
+      "include": [
+        "Mega-v12/wan2.2-rapid-mega-aio-nsfw-v12.1.safetensors"
+      ],
+      "model": "Mega-v12/wan2.2-rapid-mega-aio-nsfw-v12.1.safetensors"
+    },
+    "chroma-vae": {
+      "repository": "Comfy-Org/z_image_turbo",
+      "revision": "6fc90a3b1b653e935a0d175e260736de25b84df5",
+      "include": [
+        "split_files/vae/ae.safetensors"
+      ],
+      "model": "split_files/vae/ae.safetensors"
+    },
+    "qwen-flash": {
+      "repository": "unsloth/Qwen3.8-Flash-Next-GGUF",
+      "revision": "38bb39ee97821de2c9009abb7e93950eec396e66",
+      "include": [
+        "UD-Q4_K_XL/*.gguf",
+        "MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf",
+        "mmproj-BF16.gguf"
+      ],
+      "model": "UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf",
+      "projector": "mmproj-BF16.gguf",
+      "draft": "MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf"
+    },
+    "qwen35-hauhau-q4": {
+      "repository": "HauhauCS/Qwen3.5-27B-Uncensored-HauhauCS-Aggressive",
+      "revision": "ba23816347e0f24d82efbd2397278ff32743b75c",
+      "include": [
+        "Qwen3.5-27B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf",
+        "mmproj-Qwen3.5-27B-Uncensored-HauhauCS-Aggressive-f16.gguf"
+      ],
+      "model": "Qwen3.5-27B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf",
+      "projector": "mmproj-Qwen3.5-27B-Uncensored-HauhauCS-Aggressive-f16.gguf",
+      "sha256": {
+        "Qwen3.5-27B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf": "ffec017c7ecba924fbaa8a6576df8c74d949eacb2c264113842ddb4176bbcae1",
+        "mmproj-Qwen3.5-27B-Uncensored-HauhauCS-Aggressive-f16.gguf": "fcd4e139e023ad357934a72e1d743d476bd0a48e5d21a1ab6215e5a792207f90"
+      },
+      "runtime_model": "gufo/Qwen3.5-27B-HauhauCS-Aggressive-Q4_K_M-gufo-chat.gguf",
+      "runtime_template_sha256": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce"
+    }
+  },
+  "groups": {
+    "baseline": [
+      "vision-small",
+      "qwen27-q4",
+      "qwen27-draft"
+    ],
+    "coding": [
+      "qwen-exl3"
+    ],
+    "glm": [
+      "glm"
+    ],
+    "media-images": [
+      "image-qwen",
+      "image-chroma",
+      "chroma-encoder",
+      "chroma-vae"
+    ],
+    "media-video": [
+      "video-h3",
+      "video-wan-aio"
+    ],
+    "gufo-flash": [
+      "qwen-flash"
+    ]
+  },
+  "storage_limit_bytes": 850000000000,
+  "storage_policy_note": "User authorized exceeding 600 GB for Gufo/Halogen comparison while preserving all currently retained models."
+}

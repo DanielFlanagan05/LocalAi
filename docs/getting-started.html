@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your local AI — getting started</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f6f7;color:#18313b;font:15px/1.6 system-ui,sans-serif}main{max-width:1000px;margin:32px auto;padding:35px 40px;background:white;border-top:5px solid #13746b;border-radius:5px}h1{font-size:34px;line-height:1.15;margin:8px 0 14px}h2{font-size:22px;margin:28px 0 12px}.eyebrow{color:#13746b;font-size:12px;letter-spacing:.12em;font-weight:750;text-transform:uppercase}.sub,small{color:#566d77}.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{background:#edf6f3;padding:18px;border-radius:6px}.card h3{margin:0 0 8px;font-size:17px}code{font:13px ui-monospace,monospace;background:#edf1f4;padding:3px 5px;border-radius:3px;overflow-wrap:anywhere}pre{background:#142f39;color:#e7fff7;padding:15px 17px;border-radius:5px;white-space:pre-wrap}pre code{background:none;padding:0;color:inherit}.card pre{margin:10px 0}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #dce6e8;vertical-align:top}th{background:#f4f7f8;font-size:12px;color:#506874}.notice{border-left:3px solid #c28d40;background:#fff8ec;padding:12px 15px;font-size:14px}a{color:#126d65}li{margin:6px 0}footer{font-size:12px;color:#566d77;border-top:1px solid #dce6e8;margin-top:24px;padding-top:15px}.scroll{overflow:auto}
+@media(max-width:700px){main{margin:0;padding:24px 18px}.cards{grid-template-columns:1fr}h1{font-size:29px}.scroll table{min-width:570px}}@media print{body{background:white}main{margin:0;padding:0}pre{background:#edf1f4;color:#18313b}.card,tr{break-inside:avoid}}
+</style></head><body><main>
+<div class="eyebrow">Flow Z13 · configured October 21, 2026</div>
+<h1>Your local AI is ready to launch</h1>
+<p class="sub">Commands work from any directory. Models are shared across projects. No cloud model fallback is configured.</p>
+<p>Pi’s model picker shows a short role followed by the actual model name, quantization, engine and context—for example <b>Uncensored · Qwen3.5-27B HauhauCS Aggressive Q4_K_M · Gufo · 262K</b>. Restart Pi after label changes. Internal API IDs remain stable.</p>
+
+<p><b>Validation resumed:</b> <a href="llm-validation-resumed.html">current long-context, concurrency and recovery results</a>. Earlier benchmark reports remain dated history.</p>
+<h2>1. Start a coding or general-use agent</h2>
+<div class="cards">
+<div class="card"><h3>Pi — recommended starting point</h3><pre><code>pi</code></pre><p>Starts <b>Qwen3.8-Flash-Next 4-bit EXL3</b> on <b>Kyojin</b>, then opens Pi in your current project directory. Its file and terminal tools are configured.</p></div>
+<div class="card"><h3>Hermes — alternative agent</h3><pre><code>hermes</code></pre><p>Starts the <b>same Qwen EXL3 / Kyojin setup</b>, with its own saved sessions and compression configuration. Use it for coding or general conversation.</p></div>
+</div>
+<p>Open your project directory first, then run either command. The large model loads on the first launch. These defaults have <b>262,144 total context tokens</b>; input, tool messages, reasoning and replies share that space. Earlier testing passed 10/10 small coding tasks and 200K recall for this model.</p>
+<p><b>Copying output in Konsole:</b> press <b>Ctrl+X</b> in Pi to copy the last assistant response. For terminal-selected text, use Konsole’s <b>Ctrl+Shift+C</b>. The Wayland clipboard utilities <code>wl-copy</code> / <code>wl-paste</code> are installed in your user command path.</p>
+<p><b>Exiting:</b> in Pi, use <code>/quit</code> or its alias <code>/exit</code>. Existing Pi sessions can load the alias with <code>/reload</code>. Exit other harnesses normally, or use Ctrl-C as appropriate. The engine stays loaded for reuse. To release GPU memory or switch model families:</p>
+<pre><code>localai stop</code></pre>
+<div class="scroll"><table><thead><tr><th>Other ready commands</th><th>Model / engine</th><th>When to use</th></tr></thead><tbody>
+<tr><td><code>pi-gufo</code><br><code>hermes-gufo</code></td><td>Unsloth Qwen3.8-Flash-Next UD-Q4_K_XL + Q8 MTP / Gufo 0.20</td><td>New single-session 262K option. Fresh prefill passed 1,200 tokens/s through 200K; 1,500 remains unconfirmed. See the <a href="gufo-flash-results.html">current comparison, cache status and full installed-model inventory</a>.</td></tr>
+<tr><td><code>pi-hauhau</code><br><code>hermes-hauhau</code></td><td>HauhauCS Qwen3.5-27B Aggressive Q4_K_M / Gufo 0.20</td><td>Text-only uncensored variant, 262K configured. Uses a verified metadata-only chat-template adaptation; original tensors preserved. <a href="hauhau-gufo-setup.html">Setup, limitations and exact reproduction steps</a>.</td></tr>
+<tr><td><code>pi-local</code><br><code>hermes-local</code></td><td>Qwen3.8-27B Q4 + DFlash2 / Gufo</td><td>Smaller model; two configured 262K sessions sharing weights. The older runtime passed dual-200K recall but failed the process-swap limit. A separate Gufo 0.20 / smaller-cache candidate is under qualification; see <a href="llm-validation-resumed.html">current acceptance results</a>.</td></tr>
+<tr><td><code>LOCALAI_PROFILE=vision-max pi</code></td><td>GLM-5.3-Flash EXL3 / Kyojin</td><td>Large alternative / vision challenger. Tight memory headroom; retain as an optional choice.</td></tr>
+<tr><td><code>claude-local</code></td><td>Qwen 27B Q4 / Vulkan Messages API</td><td>Optional Claude Code harness with local Qwen. File tools passed; corrected long-context lifecycle remains unaccepted.</td></tr>
+</tbody></table></div>
+<p><small>Pi and Hermes can use the same loaded quality model; its single execution lane queues requests. For parallel sessions, choose both <code>*-local</code> commands. One inference profile runs at a time; ComfyUI can run alongside it with a shared-memory warning. To switch inference profiles, finish active work and run <code>localai stop</code> first. <code>stop-comfyui</code> stops only ComfyUI; <code>localai status</code> lists both runtimes. Quality desktop shortcuts are installed too.</small></p>
+
+<h2>2. Create images and videos in ComfyUI</h2>
+<pre><code>run-comfyui</code></pre>
+<p>Starts ComfyUI and opens <a href="http://127.0.0.1:8188/">http://127.0.0.1:8188</a>. <b>Keep its terminal open; Ctrl-C stops the server.</b> From another terminal you can stop it with:</p>
+<pre><code>stop-comfyui</code></pre>
+<p>In the left sidebar choose <b>Workflows → Ready-to-use</b>. Open a preset, edit the prompt, then click <b>Run</b>. The five native UI workflows have model selections, encoders, VAEs, sampler settings and outputs wired already.</p>
+<div class="scroll"><table><thead><tr><th>Workflow</th><th>Use</th><th>Default size</th></tr></thead><tbody>
+<tr><td>01 Image — Qwen Image 2.1</td><td>Regular text-to-image</td><td>1024 × 1024</td></tr>
+<tr><td>02 Image — Chroma permissive</td><td>Permissive-content image candidate</td><td>1024 × 1024</td></tr>
+<tr><td>03 Video with audio — H3</td><td>Regular text-to-video with audio</td><td>832 × 480 · about 5 seconds</td></tr>
+<tr><td>04 Video — Wan AIO permissive</td><td>Permissive-content text-to-video; no first-frame upload required</td><td>832 × 480 · about 5 seconds</td></tr>
+<tr><td>05 Video with audio — H3 Euler Beta</td><td>H3 alternative: Euler sampler / beta scheduler; existing eight-step turbo LoRA retained</td><td>832 × 480 · about 5 seconds · generation quality not tested</td></tr>
+</tbody></table></div>
+<p>Outputs appear in <code>~/.local/share/localai/outputs/LocalAI/</code>. Earlier workflows, including user edits, are retained under <code>~/.local/state/localai/workflow-archive/</code>; broken and removed-model templates no longer clutter the active sidebar.</p>
+<p><small>For deliberate background use: <code>run-comfyui --detach</code>; stop later with <code>stop-comfyui</code>. Use <code>--no-browser</code> to suppress opening a browser. “Permissive” identifies the chosen model family; unrestricted content behavior has not been verified. Wan AIO is a retained working experimental pack whose upstream is deprecated.</small></p>
+<p><b>Measured video performance:</b> see the <a href="video-performance.html">video benchmark and optimization report</a>. For faster repeats with one model family, use <code>run-comfyui --cached</code>; <b>stop and restart before changing families</b>. The normal launcher keeps the safer cache policy for switching among workflows.</p>
+
+<h2>3. What is retained</h2>
+<p>The user authorized exceeding the earlier 600 GB budget for a Gufo comparison while preserving the existing models. The catalog now permits <b>850 GB decimal</b>, with a separate free-disk safeguard. The current <a href="gufo-flash-results.html">Gufo report</a> lists every retained model pack.</p>
+<p>Kept: Qwen 27B Q4 + drafter/projector, Qwen Flash-Next EXL3, GLM EXL3, the small ClearCase 8B vision model, and the four media families above with their dependencies. <b>Added again for the new comparison:</b> Unsloth Flash-Next Q4 GGUF + Q8 MTP + projector. The earlier cleanup removed MiMo, Flash Q3, 27B Q8, FLUX, Z-Image model/encoder and LTX. Chroma’s small shared VAE remains.</p>
+<p>Models: <code>~/.local/share/localai/models</code>. Sessions and reports: <code>~/.local/state/localai</code>. The shared store is independent of the current repository; Git excludes model/session/context data.</p>
+
+<h2>4. Performance and verification</h2>
+<p>The large Qwen EXL3 setup was the strongest tested prefill choice here. Gufo’s Reddit comparison mixes Flash-Next/MTP on Windows with our dense 27B/DFlash2 runs, and often mixes decode with prefill. Existing logs show Balanced mode, roughly 49–52 W on the GPU PPT sensor, and some swap at deep context. A matched test is needed to isolate the remaining gap; none was run.</p>
+<p>Read the <a href="gufo-performance-diagnosis.md">Gufo diagnosis</a> or the <a href="local-ai-findings.html">historical test findings</a> for measurements and limitations.</p>
+<div class="notice">This configuration pass verified command routing, Ctrl-C/stop behavior, installed assets, native UI graph conversion and all four workflow schemas. <b>No new model benchmarks or generation tests were run.</b> Previous smoke generation does not establish full-resolution image/video quality or overnight stability.</div>
+<footer>All inference services were stopped after configuration checks. Start the service you want with the commands above. No additional testing is scheduled.</footer>
+</main></body></html>

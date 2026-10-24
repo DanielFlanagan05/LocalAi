@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gufo Flash-Next — setup and measured results</title>
+<style>body{margin:0;background:#f1f5f5;color:#19343b;font:15px/1.6 system-ui,sans-serif}main{max-width:940px;margin:32px auto;padding:32px;background:white;border-top:5px solid #18796a}h1{line-height:1.2;font-size:30px}h2{font-size:21px;margin-top:28px}table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:9px;border-bottom:1px solid #dce6e8;vertical-align:top}th{background:#edf5f3}code{font-size:13px;background:#edf2f4;padding:2px 5px;overflow-wrap:anywhere}pre{padding:16px;background:#15323b;color:white;white-space:pre-wrap}pre code{background:none}.note{background:#fff7e7;border-left:3px solid #b88837;padding:12px}small{color:#546b73}a{color:#137466}@media(max-width:700px){main{margin:0;padding:20px}table{font-size:12px}td,th{padding:7px}}</style>
+</head><body><main>
+<small>Flow Z13 · Ryzen AI Max+ 395 · 128 GB · October 21, 2026</small>
+<h1>Gufo Flash-Next: measured, local and retained</h1>
+<p><b>Fresh prefill clears 1,200 tokens/s through 200K input. The requested 1,500 tokens/s has not been demonstrated.</b> The previous EXL3 model remains installed. No retained models were removed for this comparison.</p>
+<h2>Launch from any project</h2>
+<pre><code>localai stop       # finish any existing work before switching
+pi-gufo           # Pi + Flash-Next Q4 / Gufo
+# or: hermes-gufo
+# Stop the engine when finished:
+localai stop</code></pre>
+<p>Native context: <b>262,144 total tokens</b>, shared by input, tools, reasoning and output; one execution session. Ordinary <code>pi</code> and <code>hermes</code> retain their Kyojin EXL3 defaults. <code>pi-local</code> / <code>hermes-local</code> retain the smaller Gufo 27B setup. Desktop entries: Pi Gufo Flash and Hermes Gufo Flash.</p>
+<h2>What the device measured</h2>
+<table><thead><tr><th>Fresh input target</th><th>Gufo AR</th><th>Gufo MTP</th></tr></thead><tbody>
+<tr><td>2K</td><td>1,346 tok/s</td><td>1,325 tok/s</td></tr>
+<tr><td>8K</td><td>1,387</td><td>1,364</td></tr>
+<tr><td>32K</td><td>1,390</td><td>1,357</td></tr>
+<tr><td>131K</td><td>Not run</td><td>1,311</td></tr>
+<tr><td>200K</td><td>Not run</td><td>1,266</td></tr>
+</tbody></table>
+<p><small>Three repetitions per 2K/8K/32K target, reported as medians; one run each at 131K/200K. Tokenizer-calibrated synthetic recall, greedy, thinking off, cache lookup explicitly disabled. All rows passed exact recall; actual fresh input exceeded each target and cached input was zero. These are engine prefill rates, not sustained generation or coding-quality scores.</small></p>
+<p>Official Gufo <b>0.20.0</b>, revision <code>0c03748a</code>, ROCm 7.2.3, pinned container and the guide’s exact Unsloth revision. AC power, firmware <b>Performance</b>, GPU clock policy <b>auto</b>. MTP’s first qualification retained at least <b>19.4 GiB</b> unified-memory headroom; its maximum sampled runtime-process swap was about <b>59 MiB</b>. GPU edge reached 95°C in the AR run; sustained MTP prefill was commonly around 90–94°C with roughly 70 W PPT. These observations suggest a device power/thermal contribution, not a proven root cause.</p>
+<p class="note" id="cache-status"><b>The ready-to-use configuration passed:</b> 12 GiB RAM / 16 GiB disk cache, with an 8 GiB free-memory guard. Fresh 8K median: <b>1,450 tok/s</b>; fresh 200K: <b>1,290 tok/s</b>. A subsequent continuation reused <b>200,125 tokens</b> and answered correctly in <b>0.39 seconds</b> (first output 0.21 seconds). Minimum free memory: <b>12.7 GiB</b>; sampled runtime-process swap: zero. This establishes live cache reuse; restart recovery was not tested. The table above used the initial 1 GiB cache control. The high GPU policy comparison is complete: <b>1,392 / 1,383 / 1,353 tok/s</b> medians at 2K / 8K / 32K, and <b>1,187 tok/s</b> at fresh 200K. Every measured row stayed on high and passed fresh-token/recall checks. A 200K continuation reused 200,125 tokens in 0.392s, with 13.6 GiB minimum free memory and zero sampled runtime-process swap. High did not demonstrate a performance benefit; retain <b>auto</b>. The helper restored GPU policy to <b>auto</b>; no inference runtime remains active.</p>
+<p><b>Halogen is not installed:</b> the high-policy 200K result fell below 1,200, but the better Gufo auto configuration reached 1,290. The user chose to continue with Gufo for now. Halogen is recorded as a deferred comparison in the <a href="flow-z13-plan.md">retained plan</a>; it is not being installed or tested now. Its default HGN pack would add about 118 GB while preserving existing packs. <b>NPU:</b> the production package uses HIP/GPU; its published headline rates do not require an NPU. Flash-Next NPU offload remains an unmerged experiment reporting a modest gain with additional clock/driver requirements. It was not installed.</p>
+<h2>Installed models — preserved inventory</h2>
+<table><thead><tr><th>Model / pack</th><th>Quantization / role</th><th>Approx. GB</th></tr></thead><tbody>
+<tr><td>Qwen3.8-Flash-Next, Yamz</td><td>4-bit EXL3 · Kyojin · original retained</td><td>95.4</td></tr>
+<tr><td>Qwen3.8-Flash-Next, Unsloth</td><td>UD-Q4_K_XL GGUF + Q8_0 MTP + BF16 projector · new Gufo pack</td><td>115.0</td></tr>
+<tr><td>Qwen3.8-27B, Unsloth</td><td>UD-Q4_K_XL + BF16 projector</td><td>18.5</td></tr>
+<tr><td>Qwen3.5-27B HauhauCS Aggressive</td><td>Original Q4_K_M + F16 projector (Gufo vision disabled)</td><td>17.5</td></tr>
+<tr><td>Hauhau Gufo compatibility copy</td><td>Same 851 tensors; supported chat-template metadata · <a href="hauhau-gufo-setup.html">setup guide</a></td><td>16.5</td></tr>
+<tr><td>Qwen3.8-27B DFlash2</td><td>Q4_K_M drafter</td><td>1.1</td></tr>
+<tr><td>GLM-5.3-Flash, Yamz</td><td>Mixed EXL3 · Kyojin</td><td>100.1</td></tr>
+<tr><td>Qwen3-VL-8B-Instruct</td><td>Q4_K_M + Q8_0 projector · ClearCase</td><td>5.8</td></tr>
+<tr><td>Qwen-Image 2.1</td><td>BF16 image model + encoder/VAE</td><td>32.4</td></tr>
+<tr><td>Chroma1-HD</td><td>Permissive image candidate</td><td>17.8</td></tr>
+<tr><td>Chroma dependencies</td><td>FP8 T5 encoder + shared AE VAE</td><td>5.5</td></tr>
+<tr><td>MiniMax H3</td><td>INT8 video + encoder, VAEs and turbo LoRA</td><td>55.9</td></tr>
+<tr><td>Wan 2.2 Rapid Mega AIO v12.1</td><td>Permissive video candidate</td><td>23.3</td></tr>
+</tbody></table>
+<p>All catalog packs are verified. Models remain shared at <code>~/.local/share/localai/models</code>, accessible from other repositories; weights, session histories and caches stay outside Git. Before the later Hauhau installation, measured setup storage was about <b>561 GB decimal</b> including models, applications, caches, private state and both Gufo container versions (shared layers counted once; filesystem accounting may differ). The user authorized exceeding 600 GB for this comparison; the installer now permits 850 GB while retaining disk headroom.</p>
+<p>The later Hauhau installation adds approximately 34.0 GB of model files, including the untouched publisher pack and separate Gufo compatibility copy. See its <a href="hauhau-gufo-setup.html">reproduction guide</a> for current configuration and verification; earlier Flash prefill results above do not measure Hauhau.</p>
+<h2>Reproduce / inspect</h2>
+<pre><code>localai prefill-test gufo-flash --tokens 2048 8192 32768
+localai status
+localai models-path</code></pre>
+<p><small>The test refuses an already running runtime and stops the runtime it starts. Reports: <code>~/.local/state/localai/prefill-acceptance/</code>. AR: <code>gufo-flash-ar-1792605978.json</code>; MTP: <code>gufo-flash-1792606666.json</code>. Ready-cache report: <code>gufo-flash-1792607242.json</code>; high-policy report: <code>gufo-flash-1792608191.json</code>. This is a synthetic recall and throughput check; new coding-quality, full 262K occupancy, disk-restart recovery and overnight reliability were not tested.</small></p>
+<p>Sources: <a href="https://github.com/gufo-org/gufo/blob/main/docs/models/qwen3.8-flash-next/README.md">official setup</a> · <a href="https://github.com/gufo-org/gufo/blob/main/docs/models/qwen3.8-flash-next/BENCHMARKS.md">official benchmark method</a> · <a href="https://github.com/gufo-org/gufo/pull/568">NPU proposal</a> · <a href="getting-started.html">all harnesses and ComfyUI</a>.</p>
+</main></body></html>

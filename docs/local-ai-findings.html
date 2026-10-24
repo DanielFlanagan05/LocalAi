@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local AI on Flow Z13 — findings & recommendations</title>
+<style>
+:root{--ink:#172b36;--muted:#526873;--line:#dbe5e8;--teal:#126a62;--wash:#edf6f3;--amber:#86500c}
+*{box-sizing:border-box}body{margin:0;background:#f4f7f8;color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1160px;margin:36px auto;background:white;border:1px solid var(--line);border-top:6px solid var(--teal);padding:40px 46px}
+header{padding-bottom:24px;border-bottom:1px solid var(--line)}.eyebrow{color:var(--teal);font-weight:750;font-size:12px;letter-spacing:.11em;text-transform:uppercase}
+h1{font-size:36px;line-height:1.15;letter-spacing:-.035em;margin:9px 0 12px}h2{font-size:22px;letter-spacing:-.02em;margin:30px 0 12px}p{margin:9px 0}a{color:var(--teal)}
+.sub,.note,footer{color:var(--muted)}.note{font-size:13px}.facts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.facts span{background:var(--wash);padding:6px 11px;border-radius:5px;font-size:13px}
+.recommendations{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{background:var(--wash);padding:16px 18px;border-radius:6px}.card strong{display:block;color:var(--teal);margin-bottom:4px}.card p{margin:0;font-size:14px}
+.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.45}th{text-align:left;color:var(--muted);background:#f5f8f9;font-size:11px;text-transform:uppercase;letter-spacing:.05em}th,td{padding:11px 12px;vertical-align:top;border-bottom:1px solid var(--line)}td:first-child{font-weight:650}td small{font-weight:400;color:var(--muted);display:block;margin-top:3px}
+code{font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;background:#eff3f5;padding:2px 4px;border-radius:3px;overflow-wrap:anywhere}pre{background:#eff3f5;padding:14px 16px;white-space:pre-wrap;border-radius:5px;font-size:12px}pre code{padding:0}
+.caution{border-left:3px solid #c68b36;padding:10px 14px;background:#fff8ed;font-size:13px;color:#654214;margin-top:15px}ul{padding-left:20px}li{margin:6px 0}.compact{font-size:14px}details{margin-top:20px;border-top:1px solid var(--line);padding-top:14px}summary{cursor:pointer;color:var(--teal);font-weight:650}footer{font-size:12px;margin-top:24px;padding-top:15px;border-top:1px solid var(--line)}
+@media(max-width:760px){main{margin:0;border-left:0;border-right:0;padding:25px 18px}h1{font-size:29px}.recommendations{grid-template-columns:1fr}th,td{padding:9px 8px}.table-wrap table{min-width:660px}}
+@media print{body{background:white;font-size:12px}main{margin:0;border:0;padding:0;max-width:none}h1{font-size:28px}h2{break-after:avoid}tr,.card{break-inside:avoid}.table-wrap{overflow:visible}a{color:inherit}details{font-size:11px}footer{margin-top:12px}}
+</style>
+</head>
+<body><main>
+<p class="caution"><b>Historical test report.</b> Some models listed below were removed in the earlier cleanup. A later authorized Gufo comparison added the Unsloth Flash-Next Q4 pack while retaining EXL3. See the <a href="gufo-flash-results.html">new Gufo performance results and full installed inventory</a> and <a href="getting-started.html">current getting-started guide</a>.</p>
+<header>
+<div class="eyebrow">Device testing · October 21, 2026</div>
+<h1>Local AI on your Flow Z13</h1>
+<p class="sub">Ryzen AI Max+ 395 · 128 GB unified memory · CachyOS Linux / gfx1151.<br>Testing has been stopped at your request. This report captures completed results and practical recommendations.</p>
+<div class="facts"><span><b>112 GiB</b> dynamic GPU mapping ceiling</span><span><b>225K</b> single-session Gufo input passed</span><span><b>500K</b> Qwen EXL3 recall passed</span></div>
+</header>
+
+<section aria-labelledby="recommendations"><h2 id="recommendations">What I would use</h2>
+<div class="recommendations">
+<div class="card"><strong>Everyday coding & multiple sessions</strong><p><b>Pi + Qwen3.8-27B Q4 on Gufo.</b> Best practical default from this work: 10/10 coding tasks, working tools, and an earlier two-session 200K recall pass. Both sessions are configured for 262,144 tokens; allow room for replies. The latest cache budget still lacks a full concurrent long-context repeat.</p></div>
+<div class="card"><strong>Large-model coding & long reading</strong><p><b>Qwen3.8-Flash-Next EXL3 on Kyojin.</b> My preferred large candidate: 10/10 coding tasks, 4/4 document pages, and the fastest observed large-model prefill here. Use <code>coding-quality</code> at 262K; reserve the draft-free 512K profile for experimental long reading.</p></div>
+<div class="card"><strong>ClearCase vision → text</strong><p><b>8B for parallel trials; Qwen EXL3 for a stronger serial option.</b> The bundled Qwen3-VL-8B is economical but invented some unsupported fields. Qwen EXL3 and the larger GLM both passed the four synthetic pages; Qwen was faster. Keep validation and human review for real documents.</p></div>
+<div class="card"><strong>ComfyUI image & video work</strong><p><b>Z-Image Turbo for quick drafts; Qwen-Image / FLUX.2 for quality exploration; H3 / LTX for video with audio.</b> Chroma and Wan AIO are the installed permissive-content candidates. Execution works, but testing did not establish a best-quality or “most uncensored” winner.</p></div>
+</div></section>
+
+<section aria-labelledby="harnesses"><h2 id="harnesses">Configured harnesses</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Launch from any repository</th><th>Default model / engine</th><th>Verified behavior & limits</th></tr></thead>
+<tbody>
+<tr><td>Pi<small><code>pi-local</code> · terminal</small></td><td>Qwen3.8-27B UD-Q4_K_XL + DFlash2 / Gufo<br><code>coding-concurrent</code> · 262K × 2</td><td>File read/write, coding, native cancellation, exact recovery, forced compaction and saved-session reopening passed.</td></tr>
+<tr><td>OpenCode<small><code>opencode-local</code><br><code>opencode-desktop-local</code> · CLI + desktop</small></td><td>Same Gufo 27B default</td><td>Global CLI file tools passed; desktop installed. API-created session → CLI resume timed out after successful abort/recovery and compaction. Pure CLI-to-CLI resume remains untested.</td></tr>
+<tr><td>Hermes<small><code>hermes-local</code> · terminal</small></td><td>Same Gufo 27B default</td><td>File tools, native abort, exact recovery and saved-session resume passed. Manual compression ran, but expanded the estimated token count on the short test history.</td></tr>
+<tr><td>Claude Code<small><code>claude-local</code> · terminal</small></td><td>Qwen3.8-27B Q4 / llama.cpp Vulkan<br><code>messages-compatible</code> · 262K configured</td><td>Messages API and global file tools passed with system-message normalization. Legacy alias had a 200K client limit and failed immediate recovery; corrected alias’s full lifecycle/context retry was not run.</td></tr>
+<tr><td>ComfyUI<small><code>comfyui-local</code> · browser UI</small></td><td>Seven image/video families listed below / ROCm PyTorch</td><td>Seven baseline graphs validate; nine native templates’ node types are available. Optional template add-ons are separate downloads.</td></tr>
+</tbody></table></div>
+<p class="note">Desktop launch entries are installed for the harnesses. Pi/Hermes/Claude run in a terminal; OpenCode has its own desktop application. Models run locally with no cloud fallback. Claude Code’s model-name aliases all route to local Qwen, not Anthropic-hosted Claude.</p>
+<pre><code># Switch Pi, OpenCode or Hermes to the tested large model:
+localai stop
+LOCALAI_PROFILE=coding-quality pi-local
+
+# Other useful profiles: vision-clearcase, vision-balanced, vision-max,
+# coding-quality-q3, qwen-exl3-512k-plain
+localai profiles</code></pre>
+<p class="note">These launchers retain your working directory. Finish active conversations before switching: one inference profile runs at a time, with concurrency inside that profile. ComfyUI can also run alongside it, sharing GPU compute and unified memory.</p>
+</section>
+
+<section aria-labelledby="models"><h2 id="models">Chat, coding & vision model results</h2>
+<p class="note">Context figures below are actual input tokens that passed exact recall, not just configured capacities. Coding scores use ten small synthetic Python tasks; document results use four synthetic pages. They are useful checks, not broad model rankings.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Model / installed variant</th><th>Completed result</th><th>Decision</th></tr></thead>
+<tbody>
+<tr><td>Qwen3.8-27B UD-Q4_K_XL<small>Gufo + DFlash2 Q4 drafter</small></td><td><b>10/10 coding.</b> Earlier two simultaneous 200,113-token recalls passed. Latest 26 GiB-cache ladder passed single-session 8K → <b>225,393</b>; two-worker repeat stopped after 8K.</td><td>Everyday concurrent default. Revised-cache 200K restart restoration also passed.</td></tr>
+<tr><td>Qwen3.8-Flash-Next EXL3<small>Yamz 4-bit pack / Kyojin</small></td><td><b>10/10 coding; 4/4 pages; 200,113 recall.</b> Draft-free variant passed <b>500,081</b> plus cached continuation. Smaller 1,024-token prefill chunks resolved the coding memory failure.</td><td>Preferred large candidate. 500K sustained coding remains unproven; its initial attempt failed on transport/context-budget handling, not a valid quality score.</td></tr>
+<tr><td>GLM-5.3-Flash EXL3<small>Yamz pack / Kyojin</small></td><td><b>10/10 coding; 4/4 pages; 200,098 recall.</b> Reduced prefill chunks, n-gram lookup off, 256 MiB image cache.</td><td>Viable largest tested vision challenger. Little memory headroom and observed swap activity; no demonstrated advantage over Qwen on this small suite.</td></tr>
+<tr><td>Qwen3.8-Flash-Next UD-Q3_K_XL<small>Unsloth / llama.cpp Vulkan</small></td><td><b>200,113 recall; 4/4 pages.</b> Coding suite not completed for this variant.</td><td>Useful lower-memory large-model fallback; slower prefill than Qwen EXL3 in these runs.</td></tr>
+<tr><td>MiMo-V2.6-Flash-MOPD EXL3<small>Yamz / Kyojin, text-only, 8-bit KV, no drafter</small></td><td><b>200,098 recall</b> at 225K capacity. Coding hit the memory guard during task three; full vision/drafter setup could not start safely.</td><td>Keep experimental. Reject as an everyday coding default on this desktop workload.</td></tr>
+<tr><td>Qwen3.8-27B UD-Q8_K_XL<small>llama.cpp Vulkan / vision-balanced</small></td><td>Read all <b>16/16 target values</b>, but inferred an unsupported date order. Approximately 81–109 seconds/page, serial.</td><td>Intermediate vision option. Gufo Q8 concurrent profile is configured but untested.</td></tr>
+<tr><td>Qwen3-VL-8B-Instruct Q4_K_M<small>Exact ClearCase bundled weights / Vulkan</small></td><td>Four concurrent pages read <b>16/16 values</b>, roughly 49–53 seconds/page, but invented a blank-field value and unsupported issuer/date interpretations.</td><td>Parallel extraction trials with strict post-validation. Page profile: 16K × 4; general chat profiles: 262K × 2 or 4, long-context vision untested.</td></tr>
+<tr><td>Qwen3.8-Flash-Next UD-Q4_K_XL<small>Unsloth / Gufo experimental</small></td><td>High-memory configuration did not achieve acceptance under the available memory reserve.</td><td>Use tested EXL3 or Q3 alternatives. Installation alone is not a pass.</td></tr>
+</tbody></table></div>
+<p class="note">Qwen EXL3 document pages took 13–22 seconds; GLM took 31–41 seconds. They used prompt-only JSON instructions, while the 8B/27B comparisons used constrained schemas, so this is not a controlled accuracy comparison. None establishes real ClearCase production accuracy.</p>
+</section>
+
+<section aria-labelledby="engines"><h2 id="engines">Engine performance observed</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Engine + model</th><th>Input</th><th>Prefill tok/s</th><th>Decode tok/s</th><th>Initial / cached reply</th></tr></thead>
+<tbody>
+<tr><td>Gufo · Qwen 27B Q4</td><td>200K</td><td>185</td><td>8.0</td><td>818 s / 6.96 s</td></tr>
+<tr><td>Kyojin · Qwen Flash-Next EXL3</td><td>200K</td><td>716</td><td>23.7</td><td>280 s / 0.74 s</td></tr>
+<tr><td>Kyojin · same, draft-free</td><td>500K</td><td>619</td><td>19.7</td><td>809 s / 1.14 s</td></tr>
+<tr><td>Kyojin · GLM EXL3</td><td>200K</td><td>373</td><td>28.8</td><td>533 s / 2.16 s</td></tr>
+<tr><td>llama.cpp Vulkan · Qwen Q3</td><td>200K</td><td>208</td><td>19.3</td><td>963 s / 1.67 s</td></tr>
+<tr><td>Kyojin · MiMo text-only</td><td>200K</td><td>104</td><td>8.2</td><td>1,922 s / 7.76 s</td></tr>
+</tbody></table></div>
+<p class="note">Engine-reported prefill/decode rates; wall time includes overhead. Models, quantization, caches, settings and run conditions differ; some initial prompts reused prefixes. Replies contain only 11–29 output tokens, so decode figures are <b>not sustained coding throughput</b>. Gufo’s earlier dual-200K run took about 40 minutes with downloads overlapping; cached replies were 5.85–6.39 seconds. Neither reproduces the Reddit post’s 60 tok/s claim.</p>
+<p class="compact"><b>Practical reading:</b> Kyojin gave the strongest large-model prefill results here. Gufo supplies the tested two-session setup and durable conversation cache. Vulkan is the compatibility/reference engine, including Claude’s Messages endpoint. The 27B Q4 Vulkan reference also passed 200K recall, but its earlier memory configuration makes timing unsuitable for comparison. No Ollama or LM Studio engine benchmark was completed.</p>
+</section>
+
+<section aria-labelledby="media"><h2 id="media">ComfyUI: what actually ran</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Installed family</th><th>Successful smoke test</th><th>Suggested role</th></tr></thead>
+<tbody>
+<tr><td>Z-Image Turbo BF16</td><td>512 × 512 image · 18 s</td><td>Quick image drafts</td></tr>
+<tr><td>Qwen-Image 2.1 BF16</td><td>512 × 512 image · 22 s</td><td>Image-quality / editing candidate; reference edits untested</td></tr>
+<tr><td>Chroma1-HD</td><td>512 × 512 image · 52 s</td><td>Permissive-content image candidate; content behavior unmeasured</td></tr>
+<tr><td>FLUX.2-dev FP8 mixed</td><td>512 × 512 image · 158 s</td><td>Alternative quality/editing candidate; reference edits untested</td></tr>
+<tr><td>MiniMax H3 INT8 + 8-step LoRA</td><td>320 × 192 · 22 frames with audio · 45–51 s</td><td>Video + audio exploration</td></tr>
+<tr><td>LTX-2.3 22B + distilled LoRA</td><td>320 × 192 · 17 frames with audio · 65 s</td><td>Alternative video + audio workflow</td></tr>
+<tr><td>Wan2.2 Rapid Mega AIO NSFW v12.1</td><td>320 × 192 · 17 frames · 32 s</td><td>Installed permissive-video candidate; upstream now marks this project deprecated</td></tr>
+</tbody></table></div>
+<p class="note">Times include execution/loading as encountered and use different step counts. These are sub-second/~one-second video clips, not five-second or HD benchmarks. No full-resolution quality winner was established. Chroma’s <a href="https://huggingface.co/lodestones/Chroma1-HD">model card</a> describes a flexible foundation; the <a href="https://huggingface.co/Phr00t/WAN2.2-14B-Rapid-AllInOne">Wan AIO card</a> documents its NSFW merges and deprecation. Neither proves unrestricted behavior on this setup.</p>
+<p class="compact"><b>Memory fix:</b> ComfyUI uses <code>--cache-none</code> and an 8 GiB reserve. Wan → H3 → Wan then passed in one process; earlier retained caches triggered the memory guard. Separate Wan FP16/LoRA and prompt-enhancement template options were not validated.</p>
+</section>
+
+<section aria-labelledby="limits"><h2 id="limits">Memory, storage & where testing ends</h2>
+<ul class="compact">
+<li><b>Memory:</b> BIOS reservation is 0.5 GiB, approximately 125 GiB is visible to Linux, and dynamic GTT is capped at 112 GiB. This is shared RAM, not an additional 112 GiB of dedicated VRAM. Keep OS/desktop and KV/cache headroom.</li>
+<li><b>Gufo cache:</b> 26 GiB RAM snapshots / 40 GiB disk / 16 GiB staging. After a real restart, the 200K check restored 200,107 tokens and replied in <b>11.31 s</b>; 32K restored in 2.62 s. The older 32 GiB RAM budget exhausted the reserve before 225K; the revised single-session 225K ladder passed.</li>
+<li><b>Large-model limits:</b> 500K draft-free Qwen showed about 0.84 GiB process swap; MiMo about 1.29 GiB. GLM also showed swap activity. No no-swap or overnight reliability acceptance was achieved.</li>
+<li><b>Shared files:</b> weights are in <code>~/.local/share/localai/models</code>, readable from any repository. <code>localai models-path</code> prints the path. Sessions/reports use <code>~/.local/state/localai</code>; caches use <code>~/.cache/localai</code>. Git excludes weights, sessions and context checkpoints. Launchers, dependencies and pinned runtimes are installed outside the checkout.</li>
+</ul>
+<div class="caution"><b>Not completed:</b> full revised-cache dual-200K/225K ladder, corrected Claude lifecycle, sustained 485K coding, 27B 512K/1M and GLM 512K experiments, Q8 concurrency, long-context parallel vision, expanded document variants, full-resolution images/reference edits/longer video, and the two-hour/eight-hour reliability run. These remain untested or incomplete, not passing results. Testing is stopped; no further benchmark work is scheduled by this report.</div>
+</section>
+
+<details><summary>Evidence & reproducibility</summary>
+<p class="note">Public configuration: <a href="../config/linux/profiles.json">profiles</a> · <a href="../config/linux/catalog.json">model catalog</a> · <a href="linux-setup.md">operation guide</a> · <a href="validation-status.md">detailed validation record</a>. Private reports are under <code>~/.local/state/localai/</code>; no transcripts or model files are embedded here.</p>
+<ul class="note">
+<li>Latest ladder: <code>acceptance-20261021/context-campaign-1792585506/results.json</code>; latest 200K / 225K probes: <code>benchmarks/coding-concurrent-1792587120.json</code> / <code>coding-concurrent-1792588294.json</code>.</li>
+<li>Engine comparisons: <code>benchmarks/{vision-max-1792529342,coding-quality-exl3-1792533595,coding-quality-q3-1792530471,mimo-text-1792551510,qwen-exl3-512k-plain-1792556955}.json</code>.</li>
+<li>Native lifecycle: <code>harness-recovery/{1792583854,1792585164,1792584382,1792562789}/results.json</code>. Cache restart: <code>benchmarks/cache-restart-coding-concurrent-1792585440.json</code>.</li>
+<li>Document comparisons: <code>clearcase/{1792530769,1792530834,1792534020,1792529342}/results.json</code>. Media: <code>benchmarks/media-*.json</code>. Coding evidence is indexed in the detailed validation record.</li>
+</ul></details>
+<footer>Recommendations are judgments based on this device’s completed tests, not claims of global model superiority. Context capacity, exact recall, coding quality and long-running reliability are separate findings. K = approximately 1,000 tokens; configured limits are shown explicitly where relevant.</footer>
+</main></body></html>
