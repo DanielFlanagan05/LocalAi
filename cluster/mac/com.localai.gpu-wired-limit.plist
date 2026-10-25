@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Raises the GPU wired-memory limit to 28 GB of the 36 GB at boot (macOS defaults to ~75%). -->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.localai.gpu-wired-limit</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/sbin/sysctl</string>
+        <string>iogpu.wired_limit_mb=28672</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>

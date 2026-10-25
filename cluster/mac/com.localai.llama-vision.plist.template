@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- install.sh fills the __PLACEHOLDERS__ and writes one copy per model to ~/Library/LaunchAgents. -->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.localai.llama-vision.__MODEL__</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>__ROOT__/run-llama-vision.sh</string>
+        <string>__ROOT__/env/common.env</string>
+        <string>__ROOT__/env/__MODEL__.env</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+    <key>StandardOutPath</key>
+    <string>__ROOT__/logs/__MODEL__.log</string>
+    <key>StandardErrorPath</key>
+    <string>__ROOT__/logs/__MODEL__.log</string>
+</dict>
+</plist>
