@@ -1,0 +1,23 @@
+# One llama-server vision instance per model: systemctl enable --now llama-vision@qwen3-vl-8b
+[Unit]
+Description=llama.cpp vision server (%i)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=llamavision
+Group=llamavision
+SupplementaryGroups=video render
+ExecStart=/opt/llama-vision/run-llama-vision.sh /etc/llama-vision/common.env /etc/llama-vision/%i.env
+Restart=on-failure
+RestartSec=10
+LimitMEMLOCK=infinity
+StateDirectory=llama-vision
+Environment=HOME=/var/lib/llama-vision XDG_CACHE_HOME=/var/lib/llama-vision/cache
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

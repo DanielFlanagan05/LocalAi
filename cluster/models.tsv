@@ -1,0 +1,11 @@
+# Vision models served by the cluster. Pinned to the same repositories, revisions and
+# SHA-256 values ClearCase verifies (ClearCase/src/ClearCase.App/LocalModelCatalog.cs).
+# Columns: model	role	repository	revision	file	size_bytes	sha256
+qwen3-vl-8b	model	Qwen/Qwen3-VL-8B-Instruct-GGUF	00e7d63528e65d7b64e80e1293a8360b4af6a594	Qwen3VL-8B-Instruct-Q4_K_M.gguf	5027784800	67d1659bfe71b89d50b45a4ad1a9e5b997e5bb16ce5da66a6a6167abd569e9e2
+qwen3-vl-8b	mmproj	Qwen/Qwen3-VL-8B-Instruct-GGUF	00e7d63528e65d7b64e80e1293a8360b4af6a594	mmproj-Qwen3VL-8B-Instruct-Q8_0.gguf	752289728	c6ba85508d82f42590e6eb77d5340369ab6fecf107a7561d809523d8aa5f3bfd
+internvl3-14b	model	ggml-org/InternVL3-14B-Instruct-GGUF	9cb30b2e46f55a5b0db9782dea1c99610586c629	InternVL3-14B-Instruct-Q4_K_M.gguf	8985340608	4e68e1a798088391fb26051c4165a25cf1a20f76e3f5b891c024375d2bb8a30e
+internvl3-14b	mmproj	ggml-org/InternVL3-14B-Instruct-GGUF	9cb30b2e46f55a5b0db9782dea1c99610586c629	mmproj-InternVL3-14B-Instruct-Q8_0.gguf	377984320	6fefe0e428689271364dba9968c8ec74b28d04fa4d5d88d12b8c84c357e9c4cc
+gemma3-12b	model	ggml-org/gemma-3-12b-it-GGUF	ec0cbabd8dbff316f659876a50202295c3c4a314	gemma-3-12b-it-Q4_K_M.gguf	7300574976	7bb69bff3f48a7b642355d64a90e481182a7794707b3133890646b1efa778ff5
+gemma3-12b	mmproj	ggml-org/gemma-3-12b-it-GGUF	ec0cbabd8dbff316f659876a50202295c3c4a314	mmproj-model-f16.gguf	854200224	30c02d056410848227001830866e0a269fcc28aaf8ca971bded494003de9f5a5
+qwen3-vl-30b-a3b	model	Qwen/Qwen3-VL-30B-A3B-Instruct-GGUF	f54435e6cc31258f04b0969105c3f6badb197931	Qwen3VL-30B-A3B-Instruct-Q8_0.gguf	32483932992	b9d01be012619d717c8a1e1cd5284c753ea66d56c24089461a58295fb17c1e64
+qwen3-vl-30b-a3b	mmproj	Qwen/Qwen3-VL-30B-A3B-Instruct-GGUF	f54435e6cc31258f04b0969105c3f6badb197931	mmproj-Qwen3VL-30B-A3B-Instruct-Q8_0.gguf	712148928	82a9966edfdbc1b18a27fd90af96d50cbf111a51484f6290e946dccf461c8150

@@ -100,3 +100,6 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# Vision cluster secrets
+/cluster/.env

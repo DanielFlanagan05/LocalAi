@@ -1,0 +1,58 @@
+# LiteLLM gateway for the vision cluster. Runs on the desktop at http://127.0.0.1:4000/v1.
+# Every deployment is a llama-server instance (see cluster/README.md for the topology).
+# Deployments that share a model_name form one load-balanced group.
+
+model_list:
+  # --- qwen3-vl-8b: extraction pool, one deployment per machine -----------------------
+  - model_name: qwen3-vl-8b
+    litellm_params: { model: openai/qwen3-vl-8b, api_base: "http://127.0.0.1:9101/v1", api_key: os.environ/CLUSTER_API_KEY }
+    model_info: { id: desktop/qwen3-vl-8b }
+  - model_name: qwen3-vl-8b
+    litellm_params: { model: openai/qwen3-vl-8b, api_base: "http://flowz13.tail632a33.ts.net:9101/v1", api_key: os.environ/CLUSTER_API_KEY }
+    model_info: { id: z13/qwen3-vl-8b }
+  - model_name: qwen3-vl-8b
+    litellm_params: { model: openai/qwen3-vl-8b, api_base: "http://macbook.tail632a33.ts.net:9101/v1", api_key: os.environ/CLUSTER_API_KEY }
+    model_info: { id: mac/qwen3-vl-8b }
+
+  # --- independent cross-check models --------------------------------------------------
+  - model_name: internvl3-14b
+    litellm_params: { model: openai/internvl3-14b, api_base: "http://flowz13.tail632a33.ts.net:9102/v1", api_key: os.environ/CLUSTER_API_KEY }
+    model_info: { id: z13/internvl3-14b }
+  - model_name: gemma3-12b
+    litellm_params: { model: openai/gemma3-12b, api_base: "http://flowz13.tail632a33.ts.net:9103/v1", api_key: os.environ/CLUSTER_API_KEY }
+    model_info: { id: z13/gemma3-12b }
+  - model_name: gemma3-12b
+    litellm_params: { model: openai/gemma3-12b, api_base: "http://macbook.tail632a33.ts.net:9103/v1", api_key: os.environ/CLUSTER_API_KEY }
+    model_info: { id: mac/gemma3-12b }
+
+  # --- judge for disagreements ---------------------------------------------------------
+  - model_name: qwen3-vl-30b-a3b
+    litellm_params: { model: openai/qwen3-vl-30b-a3b, api_base: "http://flowz13.tail632a33.ts.net:9104/v1", api_key: os.environ/CLUSTER_API_KEY }
+    model_info: { id: z13/qwen3-vl-30b-a3b }
+
+router_settings:
+  # Fewest in-flight requests wins, so faster nodes naturally take more of the work.
+  routing_strategy: least-busy
+  model_group_alias:
+    cc-extract: qwen3-vl-8b
+    cc-verify-a: internvl3-14b
+    cc-verify-b: gemma3-12b
+    cc-judge: qwen3-vl-30b-a3b
+  fallbacks:
+    - qwen3-vl-30b-a3b: [internvl3-14b]
+    - internvl3-14b: [gemma3-12b]
+    - gemma3-12b: [internvl3-14b]
+  # Matches ClearCase's per-inference timeout. An unreachable node is benched for
+  # cooldown_time after one failure, so an offline machine (e.g. the desktop while
+  # Strata owns the GPU) costs one retry, not a stall.
+  timeout: 600
+  num_retries: 2
+  allowed_fails: 1
+  cooldown_time: 60
+
+litellm_settings:
+  request_timeout: 600
+  telemetry: false
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
