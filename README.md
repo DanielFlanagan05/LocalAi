@@ -4,6 +4,8 @@ Use [getting-started.html](docs/getting-started.html) for the current commands a
 
 Video follow-up: [timings, cache controls and optimization results](docs/video-performance.html). Full 480p clips took 7m 14s (H3 with audio) and 9m 19s (Wan AIO); opt-in caching improved short same-family repeats. The extra H3 attention node did not improve the full run and remains disabled. Halogen is retained as a deferred test in the plan.
 
+Abliterated Flash-Next (2026-11-02): `pi-abliterated` / `hermes-abliterated` run huihui-ai Qwen3.8-Flash-Next abliterated v2 UD-IQ4_XS (profile `flash-abliterated`). It is also the default model in `~/.hermes`, which Scarf/ScarfGo reach over SSH through `~/.local/bin/hermes-scarf`; see [docs/remote-hermes.md](docs/remote-hermes.md). Other Flash-Next profiles were reduced to `coding-quality` (Kyojin) and `gufo-flash` (Gufo).
+
 Additional uncensored LLM: `pi-hauhau` / `hermes-hauhau` run HauhauCS Qwen3.5-27B Aggressive Q4_K_M on Gufo. See [installation and reproduction steps](docs/hauhau-gufo-setup.html); text-only with a verified metadata-only chat-template compatibility copy.
 
 # LocalAI

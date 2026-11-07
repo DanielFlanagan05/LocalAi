@@ -26,14 +26,13 @@ def jobs():
     add('primary-context-ladder','coding-concurrent','campaign.py','coding-concurrent','--context-only','--repeats','1',
         '--directory','@primary-context-directory',timeout=21600)
     add('claude-recovery','messages-compatible','harness_recovery.py','--profile','messages-compatible','--harness','claude')
-    add('qwen-500k-coding','qwen-exl3-512k-plain','coding_benchmark.py','qwen-exl3-512k-plain','--no-start','--input-tokens','485000',timeout=14400)
     add('qwen-27b-512k','qwen-512k','benchmark.py','qwen-512k','--no-start','--input-tokens','500000','--repeats','1',timeout=14400)
     add('qwen-27b-1m','qwen-1m','benchmark.py','qwen-1m','--no-start','--input-tokens','950000','--repeats','1',timeout=21600)
     add('glm-512k','glm-512k','benchmark.py','glm-512k','--no-start','--input-tokens','500000','--repeats','1',timeout=14400)
     add('q8-concurrent-200k','coding-concurrent-q8','benchmark.py','coding-concurrent-q8','--no-start','--input-tokens','200000','--workers','2','--repeats','1',timeout=14400)
     for profile,workers in [('vision-small',2),('vision-small-four',4)]:
         add(profile+'-200k-image',profile,'benchmark.py',profile,'--no-start','--input-tokens','200000','--workers',str(workers),'--repeats','1','--image','@synthetic-page',timeout=14400)
-    for profile,workers in [('vision-clearcase',2),('vision-clearcase',4),('vision-balanced',1),('vision-quality',1),('vision-max',1)]:
+    for profile,workers in [('vision-clearcase',2),('vision-clearcase',4),('vision-balanced',1),('vision-max',1)]:
         for mode in (['constrained','prompt-only'] if profile in ('vision-clearcase','vision-balanced') else ['prompt-only']):
             options=['--profile',profile,'--no-start','--workers',str(workers),'--variants','low','high','rotated','crop']
             if mode=='prompt-only': options.append('--prompt-only-schema')
